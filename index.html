@@ -27,12 +27,13 @@
 
         function play() {
             updateSong()
-            audio.loop = true;
-            audio.play();
+            var toPlay = audio
+            toPlay.loop = true;
+            toPlay.play();
             var minimumDelay = parseInt(document.getElementById("minimumDelay").value)
             var maximumDelay = parseInt(document.getElementById("maximumDelay").value)
             setTimeout(function() {
-                audio.pause();
+                toPlay.pause();
                 bell.play();
                 audio.currentTime = 0;
             }, (getRndInteger(minimumDelay, maximumDelay) * 1000));

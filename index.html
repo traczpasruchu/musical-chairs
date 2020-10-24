@@ -8,12 +8,12 @@
 
 <body>
     <button onclick="play()">Play Audio</button>
-    <button onclick="play()">Play Audio</button>
+    <button onclick='stop()'>Stop Audio</button>
     <p>Minimum: </p>
     <input type="number" id="minimumDelay" value="30">
     <p>Maximum: </p>
     <input type="number" id="maximumDelay" value="45">
-    <select id="songs" onchange="updateSong()">
+    <select id="songs">
         <option>Mario Slide Music</option>
         <option>Banjo Music</option>
         <option>Just Wait A Moment</option>
@@ -24,19 +24,30 @@
     <script>
         var audio = getSelectedSong();
         var bell = new Audio('sound-effects/bell.mp3');
+        var playing = false
 
         function play() {
-            updateSong()
-            var toPlay = audio
-            toPlay.loop = true;
-            toPlay.play();
-            var minimumDelay = parseInt(document.getElementById("minimumDelay").value)
-            var maximumDelay = parseInt(document.getElementById("maximumDelay").value)
-            setTimeout(function() {
-                toPlay.pause();
-                bell.play();
-                audio.currentTime = 0;
-            }, (getRndInteger(minimumDelay, maximumDelay) * 1000));
+            if (playing === false) {
+                playing = true;
+                updateSong();
+                var toPlay = audio;
+                toPlay.loop = true;
+                toPlay.play();
+                var minimumDelay = parseInt(document.getElementById("minimumDelay").value);
+                var maximumDelay = parseInt(document.getElementById("maximumDelay").value);
+                setTimeout(function() {
+                    toPlay.pause();
+                    bell.play();
+                    audio.currentTime = 0;
+                    playing = false;
+                }, (getRndInteger(minimumDelay, maximumDelay) * 1000));
+            }
+        };
+
+        function stop() {
+            audio.pause();
+            audio.currentTime = 0;
+            playing = false;
         };
 
         function getRndInteger(min, max) {

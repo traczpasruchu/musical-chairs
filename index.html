@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <title>Musical Chairs</title>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <button onclick="play()">Play Audio</button>
+    <button onclick="play()">Play Audio</button>
+    <p>Minimum: </p>
+    <input type="number" id="minimumDelay" value="30">
+    <p>Maximum: </p>
+    <input type="number" id="maximumDelay" value="45">
+    <select id="songs" onchange="updateSong()">
+        <option>Mario Slide Music</option>
+        <option>Banjo Music</option>
+        <option>Just Wait A Moment</option>
+        <option>What Will You Do With a Drunken Sailor</option>
+        <option>Ra Ra Rasputin</option>
+        <option>Random Music</option>
+    </select>
+    <script>
+        var audio = getSelectedSong();
+        var bell = new Audio('sound-effects/bell.mp3');
+
+        function play() {
+            updateSong()
+            audio.loop = true;
+            audio.play();
+            var minimumDelay = parseInt(document.getElementById("minimumDelay").value)
+            var maximumDelay = parseInt(document.getElementById("maximumDelay").value)
+            setTimeout(function() {
+                audio.pause();
+                bell.play();
+                audio.currentTime = 0;
+            }, (getRndInteger(minimumDelay, maximumDelay) * 1000));
+        };
+
+        function getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        };
+
+        function getSelectedSong() {
+            var currentSong = document.getElementById('songs').selectedIndex;
+            if (currentSong === 5) {
+                currentSong = getRndInteger(0, 4);
+            };
+            return new Audio('songs/song' + currentSong + '.mp3');
+        };
+
+        function updateSong() {
+            audio = getSelectedSong();
+        };
+    </script>
+</body></html>

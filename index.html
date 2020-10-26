@@ -35,7 +35,7 @@
                 toPlay.play();
                 var minimumDelay = parseInt(document.getElementById("minimumDelay").value);
                 var maximumDelay = parseInt(document.getElementById("maximumDelay").value);
-                setTimeout(function() {
+                delay = setTimeout(function() {
                     toPlay.pause();
                     bell.play();
                     audio.currentTime = 0;
@@ -47,6 +47,7 @@
         function stop() {
             audio.pause();
             audio.currentTime = 0;
+            clearTimeout(delay);
             playing = false;
         };
 
